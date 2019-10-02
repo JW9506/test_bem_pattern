@@ -2,12 +2,14 @@
   font-size: 2.2rem;
   font-weight: 300;
   text-align: center;
-  padding-bottom: 4rem;
   @mixin atSmall {
     font-size: 3.75rem; 
   }
   strong {
     font-weight: 500;
+  }
+  &--blue {
+    color: $mainBlue;
   }
   &__icon {
     display: block;
