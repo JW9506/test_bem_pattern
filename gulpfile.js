@@ -13,8 +13,7 @@ function html(cb) {
 }
 
 function cssInject() {
-  return src("./app/temp/styles/styles.css")
-    .pipe(browserSync.stream());
+  return src("./app/temp/styles/styles.css").pipe(browserSync.stream());
 }
 
 function styles() {
