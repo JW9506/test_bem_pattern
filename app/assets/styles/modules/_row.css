@@ -101,4 +101,13 @@
       display: flex;
     }
   }
+
+  &--padding-left-right {
+    padding-left: 1rem;
+    padding-right: 1rem; 
+    @mixin atSmall {
+      padding-left: 4rem;
+      padding-right: 4rem; 
+    }
+  }
 }

@@ -580,6 +580,16 @@ a {
       float: none;
       display: flex;
     }
+.row--padding-left-right {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+@media (min-width: 530px) {
+.row--padding-left-right {
+      padding-left: 4rem;
+      padding-right: 4rem
+  }
+  }
 .generic-content-container p {
     font-weight: 300;
     line-height: 1.65;
