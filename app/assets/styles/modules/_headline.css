@@ -2,6 +2,10 @@
   font-weight: 300;
   font-size: 1.9rem;
   color: $mainBlue;
+  padding: 0 2rem;
+  @mixin atLarge {
+    padding: 0; 
+  }
 
   @mixin atSmall {
     font-size: 2.875rem; 
