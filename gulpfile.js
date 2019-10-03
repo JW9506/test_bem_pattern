@@ -9,6 +9,8 @@ const mixins = require("postcss-mixins");
 const svgSprite = require("gulp-svg-sprite");
 const rename = require("gulp-rename");
 const del = require("del");
+const hexrgba = require("postcss-hexrgba");
+const webpack = require("webpack");
 
 function html(cb) {
   browserSync.reload();
@@ -21,7 +23,7 @@ function cssInject() {
 
 function styles() {
   return src("./app/assets/styles/styles.css")
-    .pipe(postcss([cssImport, mixins, cssvars, nested, autoprefixer]))
+    .pipe(postcss([cssImport, mixins, cssvars, nested, hexrgba, autoprefixer]))
     .on("CssSyntaxError", function(msg) {
       console.log(msg.toString());
       this.emit("end");
@@ -65,10 +67,23 @@ function copySpriteCSS() {
     .pipe(dest("./app/assets/styles/modules"));
 }
 
+function compileScript(cb) {
+  webpack(require("./webpack.config.js"), function(err, stats) {
+    if (err) console.error(err.toString());
+    console.log(stats.toString());
+  });
+  cb();
+}
+
+function scriptRefresh() {
+  return src("./app/temp/scripts/App.js").pipe(browserSync.stream());
+}
+
 exports.watch = function() {
   browserSync.init({ notify: false, open: false, server: { baseDir: "app" } });
   watch(["./app/assets/images/icons/*"], series(beginClean, createSprite, copySpriteGraphic, copySpriteCSS, endClean));
   watch(["./app/index.html"], html);
   watch(["./app/assets/styles/**/*.css"], series(styles, cssInject));
+  watch(["./app/assets/scripts/**/*.js"], series(compileScript, scriptRefresh));
 };
 
