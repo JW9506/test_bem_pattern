@@ -6,6 +6,9 @@ const nested = require("postcss-nested");
 const cssImport = require("postcss-import");
 const browserSync = require("browser-sync").create();
 const mixins = require("postcss-mixins");
+const svgSprite = require("gulp-svg-sprite");
+const rename = require("gulp-rename");
+const del = require("del");
 
 function html(cb) {
   browserSync.reload();
@@ -26,8 +29,46 @@ function styles() {
     .pipe(dest("./app/temp/styles"));
 }
 
+function beginClean() {
+  return del(["./app/assets/images/sprites"]);
+} 
+
+function endClean() {
+  return del(["./app/temp/sprite"]);
+} 
+
+function createSprite() {
+  return src("./app/assets/images/icons/**/*.svg")
+    .pipe(
+      svgSprite({
+        mode: {
+          css: {
+            sprite: "sprite.svg",
+            render: {
+              css: { template: "./app/assets/styles/sprite-template.css" }
+            }
+          }
+        }
+      })
+    )
+    .pipe(dest("./app/temp/sprite/"));
+}
+
+function copySpriteGraphic() {
+  return src("./app/temp/sprite/css/**/*.svg")
+    .pipe(dest("./app/assets/images/sprites"));
+}
+
+function copySpriteCSS() {
+  return src("./app/temp/sprite/css/*.css")
+    .pipe(rename("_sprite.css"))
+    .pipe(dest("./app/assets/styles/modules"));
+}
+
 exports.watch = function() {
-  browserSync.init({ notify: false, server: { baseDir: "app" } });
+  browserSync.init({ notify: false, open: false, server: { baseDir: "app" } });
+  watch(["./app/assets/images/icons/*"], series(beginClean, createSprite, copySpriteGraphic, copySpriteCSS, endClean));
   watch(["./app/index.html"], html);
   watch(["./app/assets/styles/**/*.css"], series(styles, cssInject));
 };
+
