@@ -138,7 +138,7 @@ function compressStatics() {
 }
 
 exports.icon = series(beginClean, createSprite, createPngCopy, copySpriteGraphic, copySpriteCSS, endClean);
-exports.compile = series(styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
+exports.compile = series(exports.icon, styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
 exports.build = series(deleteDocsFolder, optimizeImages, compressStatics);
 exports.previewDocs = function() {
   browserSync.init({ notify: false, open: false, server: { baseDir: "docs" } }); 
