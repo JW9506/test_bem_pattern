@@ -11,6 +11,8 @@ const hexrgba = require("postcss-hexrgba");
 const browserSync = require("browser-sync").create();
 const del = require("del");
 const webpack = require("webpack");
+const svg2png = require("gulp-svg2png");
+const modernizr = require("gulp-modernizr");
 
 function html(cb) {
   browserSync.reload();
@@ -35,6 +37,12 @@ function beginClean() {
   return del(["./app/assets/images/sprites"]);
 } 
 
+function createPngCopy() {
+  return src("./app/temp/sprite/css/*.svg")
+    .pipe(svg2png())
+    .pipe(dest("./app/temp/sprite/css"))
+}
+
 function endClean() {
   return del(["./app/temp/sprite"]);
 } 
@@ -43,8 +51,20 @@ function createSprite() {
   return src("./app/assets/images/icons/**/*.svg")
     .pipe(
       svgSprite({
+        shape: {
+          spacing: {
+            padding: 5
+          }
+        },
         mode: {
           css: {
+            variables: {
+              replaceSvgWithPng: function() {
+                return function(sprite, render) {
+                  return render(sprite).split(".svg").join(".png");
+                };
+              }
+            },
             sprite: "sprite.svg",
             render: {
               css: { template: "./app/assets/styles/sprite-template.css" }
@@ -57,7 +77,7 @@ function createSprite() {
 }
 
 function copySpriteGraphic() {
-  return src("./app/temp/sprite/css/**/*.svg")
+  return src("./app/temp/sprite/css/**/*.{svg,png}")
     .pipe(dest("./app/assets/images/sprites"));
 }
 
@@ -79,11 +99,24 @@ function scriptRefresh() {
   return src("./app/temp/scripts/App.js").pipe(browserSync.stream());
 }
 
+exports.modernizr = function() {
+  return src(["./app/assets/styles/**/*.css", "./app/assets/scripts/**/*.js"])
+    .pipe(modernizr({
+      options: [
+        "setClasses"
+      ]
+    }))
+    .pipe(dest("./app/temp/scripts/"));
+};
+
+exports.icon = series(beginClean, createSprite, createPngCopy, copySpriteGraphic, copySpriteCSS, endClean);
+exports.build = series(styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
+
 exports.watch = function() {
   browserSync.init({ notify: false, open: false, server: { baseDir: "app" } });
-  watch(["./app/assets/images/icons/*"], series(beginClean, createSprite, copySpriteGraphic, copySpriteCSS, endClean));
+  watch(["./app/assets/images/icons/*"], exports.icon);
   watch(["./app/index.html"], html);
   watch(["./app/assets/styles/**/*.css"], series(styles, cssInject));
-  watch(["./app/assets/scripts/**/*.js"], series(compileScript, scriptRefresh));
+  watch(["./app/assets/scripts/**/*.js"], series(exports.modernizr, compileScript, scriptRefresh));
 };
 
