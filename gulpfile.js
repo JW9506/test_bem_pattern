@@ -1,15 +1,15 @@
 const { watch, src, dest, series } = require("gulp");
 const postcss = require("gulp-postcss");
+const svgSprite = require("gulp-svg-sprite");
+const rename = require("gulp-rename");
 const autoprefixer = require("autoprefixer");
 const cssvars = require("postcss-simple-vars");
 const nested = require("postcss-nested");
 const cssImport = require("postcss-import");
-const browserSync = require("browser-sync").create();
 const mixins = require("postcss-mixins");
-const svgSprite = require("gulp-svg-sprite");
-const rename = require("gulp-rename");
-const del = require("del");
 const hexrgba = require("postcss-hexrgba");
+const browserSync = require("browser-sync").create();
+const del = require("del");
 const webpack = require("webpack");
 
 function html(cb) {

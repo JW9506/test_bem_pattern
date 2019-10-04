@@ -115,11 +115,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
-var MobileMenu = function MobileMenu() {
-  _classCallCheck(this, MobileMenu);
-};
+
+var MobileMenu =
+/*#__PURE__*/
+function () {
+  function MobileMenu() {
+    _classCallCheck(this, MobileMenu);
+
+    this.siteHeader = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".site-header");
+    this.menuIcon = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".site-header__menu-icon");
+    this.menuContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".site-header__menu-content");
+    this.events();
+  }
+
+  _createClass(MobileMenu, [{
+    key: "events",
+    value: function events() {
+      this.menuIcon.click(this.toggleTheMenu.bind(this));
+    }
+  }, {
+    key: "toggleTheMenu",
+    value: function toggleTheMenu() {
+      this.menuContent.toggleClass("site-header__menu-content--is-visible");
+      this.siteHeader.toggleClass("site-header--is-expanded");
+      this.menuIcon.toggleClass("site-header__menu-icon--close-x");
+    }
+  }]);
+
+  return MobileMenu;
+}();
 
 
 
