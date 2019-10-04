@@ -13,6 +13,11 @@ const del = require("del");
 const webpack = require("webpack");
 const svg2png = require("gulp-svg2png");
 const modernizr = require("gulp-modernizr");
+const imagemin = require("gulp-imagemin");
+const usemin = require("gulp-usemin");
+const rev = require("gulp-rev");
+const cssnano = require("gulp-cssnano");
+const uglify = require("gulp-uglify");
 
 function html(cb) {
   browserSync.reload();
@@ -109,8 +114,35 @@ exports.modernizr = function() {
     .pipe(dest("./app/temp/scripts/"));
 };
 
+function deleteDocsFolder() {
+  return del("./docs");
+}
+
+function optimizeImages() {
+  return src(["./app/assets/images/**/*", "!./app/assets/images/icons", "!./app/assets/images/icons/**/*"])
+    .pipe(imagemin({
+      progressive: true,
+      interlaced: true,
+      multipass: true
+    }))
+    .pipe(dest("./docs/assets/images"));
+}
+
+function compressStatics() {
+  return src("./app/index.html")
+    .pipe(usemin({
+      css: [function() {return rev()}, function() {return cssnano()}],
+      js: [function() {return rev()}, function() {return uglify()}]
+    }))
+    .pipe(dest("./docs"));
+}
+
 exports.icon = series(beginClean, createSprite, createPngCopy, copySpriteGraphic, copySpriteCSS, endClean);
-exports.build = series(styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
+exports.compile = series(styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
+exports.build = series(deleteDocsFolder, optimizeImages, compressStatics);
+exports.previewDocs = function() {
+  browserSync.init({ notify: false, open: false, server: { baseDir: "docs" } }); 
+};
 
 exports.watch = function() {
   browserSync.init({ notify: false, open: false, server: { baseDir: "app" } });
