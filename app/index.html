@@ -24,22 +24,28 @@
     <header class="site-header">
       <div class="wrapper">
         <div class="site-header__logo">
-          <span class="icon icon--clear-view-escapes"></span> 
+          <span class="icon icon--clear-view-escapes"></span>
         </div>
         <div class="site-header__menu-icon">
           <div class="site-header__menu-icon__middle"></div>
         </div>
-        <div class="site-header__menu-content"> 
+        <div class="site-header__menu-content">
           <div class="site-header__btn-container">
-            <a href="#" class="btn">Get in Touch</a>
+            <a href="#" class="btn open-modal">Get in Touch</a>
           </div>
           <nav class="primary-nav primary-nav--pull-right">
             <ul>
-              <li><a href="#our-beginning" id="our-beginning-link">Our Beginning</a></li>
+              <li>
+                <a href="#our-beginning" id="our-beginning-link"
+                  >Our Beginning</a
+                >
+              </li>
               <li><a href="#features" id="features-link">Features</a></li>
-              <li><a href="#testimonials" id="testimonials-link">Testimonials</a></li>
+              <li>
+                <a href="#testimonials" id="testimonials-link">Testimonials</a>
+              </li>
             </ul>
-          </nav> 
+          </nav>
         </div>
       </div>
     </header>
@@ -84,13 +90,17 @@
             We create soul restoring journeys that inspire you to be you.
           </p>
           <p>
-            <a href="#" class="btn btn--orange btn--large">Get Started Today</a>
+            <a href="#" class="btn btn--orange btn--large open-modal">Get Started Today</a>
           </p>
         </div>
       </div>
     </div>
 
-    <div id="our-beginning" class="page-section" data-matching-link="#our-beginning-link">
+    <div
+      id="our-beginning"
+      class="page-section"
+      data-matching-link="#our-beginning-link"
+    >
       <div class="wrapper">
         <h2 class="headline headline--centered headline--light">
           The first trip we planned <strong>was our own.</strong>
@@ -179,7 +189,11 @@
       </div>
     </div>
 
-    <div id="features" class="page-section page-section--blue" data-matching-link="#features-link">
+    <div
+      id="features"
+      class="page-section page-section--blue"
+      data-matching-link="#features-link"
+    >
       <div class="wrapper">
         <h2 class="section-title">
           <span class="icon icon--star section-title__icon"></span>
@@ -327,12 +341,33 @@
       <div class="wrapper">
         <p>
           <span class="site-footer__text">
-             Copyright &copy; 2016 Clear View Escapes. All rights reserved.
+            Copyright &copy; 2016 Clear View Escapes. All rights reserved.
           </span>
-          <a href="#" class="btn btn--orange">Get in Touch</a>
-        </p> 
+          <a href="#" class="btn btn--orange open-modal">Get in Touch</a>
+        </p>
       </div>
     </footer>
+    <div class="modal">
+      <div class="modal__inner">
+        <h2 class="section-title section-title--blue section-title--less-margin">
+          <span class="icon icon--mail section-title__icon"></span>
+          Get in <strong>Touch</strong>
+        </h2>
+        <div class="wrapper wrapper--narrow">
+          <p class="modal__description">
+            We will have an online order system in place soon. Until then, connect
+            weith us on any of the platforms below!
+          </p> 
+        </div>
+        <div class="social-icons">
+          <a href="#" class="social-icons__icon"><span class="icon icon--facebook"></span></a>
+          <a href="#" class="social-icons__icon"><span class="icon icon--twitter"></span></a>
+          <a href="#" class="social-icons__icon"><span class="icon icon--instagram"></span></a>
+          <a href="#" class="social-icons__icon"><span class="icon icon--youtube"></span></a>
+        </div> 
+      </div>
+      <div class="modal__close">X</div>
+    </div>
     <script src="temp/scripts/App.js"></script>
   </body>
 </html>

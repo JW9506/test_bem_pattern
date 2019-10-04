@@ -302,6 +302,7 @@ a {
     left: 0;
     width: 100%;
     text-align: center;
+    padding-top: 5.6rem;
   }
 .large-hero__title {
     font-weight: 300;
@@ -365,6 +366,9 @@ a {
 }
 .wrapper--medium {
     max-width: 976px;
+  }
+.wrapper--narrow {
+    max-width: 470px;
   }
 .wrapper .wrapper {
     padding-left: 0;
@@ -638,6 +642,10 @@ a {
       margin-bottom: 0;
       display: inline-block
   }
+  }
+.section-title--less-margin {
+    margin-bottom: 1.3rem;
+    margin-top: 0;
   }
 .feature-item {
   position: relative;
@@ -980,4 +988,83 @@ a {
 .reveal-item--is-visible {
     opacity: 1;
     transform: scale(1);
-  } 
+  }
+.modal {
+  position: fixed;
+  z-index: 5;
+  background-color: rgba(255, 255, 255, .94);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: all .3s ease-out;
+  transform: scale(1.2);
+  visibility: hidden;
+}
+.modal__inner {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+.modal__description {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.65;
+  }
+.modal__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2rem;
+    transform: scaleX(1.2);
+    transform-origin: 100%;
+    color: #2f5572;
+    cursor: pointer;
+  }
+.modal__close:hover {
+      color: #d59541;
+    }
+.modal--is-visible {
+    visibility: visible;
+    transform: scale(1);
+    opacity: 1;
+  }
+.social-icons {
+  text-align: center;
+}
+.social-icons__icon {
+    background-color: #d59541;
+    display: inline-block;
+    padding: 0.4rem 1.3rem;
+    width: 33%;
+    margin-right: 1rem;
+    margin-bottom: 1.5rem;
+    height: 72px;
+    position: relative;
+  }
+.social-icons__icon:nth-child(even) {
+      margin-right: 0;
+    }
+@media (min-width: 530px) {
+.social-icons__icon {
+      width: 72px; 
+      margin-right: 1.7rem;
+      margin-bottom: 0
+  }
+      .social-icons__icon:nth-child(even) {
+        margin-right: 1.7rem;
+      }
+      .social-icons__icon:last-child {
+        margin-right: 0;
+      }
+  }
+.social-icons__icon .icon {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    } 
