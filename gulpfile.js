@@ -40,17 +40,17 @@ function styles() {
 
 function beginClean() {
   return del(["./app/assets/images/sprites"]);
-} 
+}
 
 function createPngCopy() {
   return src("./app/temp/sprite/css/*.svg")
     .pipe(svg2png())
-    .pipe(dest("./app/temp/sprite/css"))
+    .pipe(dest("./app/temp/sprite/css"));
 }
 
 function endClean() {
   return del(["./app/temp/sprite"]);
-} 
+}
 
 function createSprite() {
   return src("./app/assets/images/icons/**/*.svg")
@@ -66,7 +66,9 @@ function createSprite() {
             variables: {
               replaceSvgWithPng: function() {
                 return function(sprite, render) {
-                  return render(sprite).split(".svg").join(".png");
+                  return render(sprite)
+                    .split(".svg")
+                    .join(".png");
                 };
               }
             },
@@ -82,8 +84,9 @@ function createSprite() {
 }
 
 function copySpriteGraphic() {
-  return src("./app/temp/sprite/css/**/*.{svg,png}")
-    .pipe(dest("./app/assets/images/sprites"));
+  return src("./app/temp/sprite/css/**/*.{svg,png}").pipe(
+    dest("./app/assets/images/sprites")
+  );
 }
 
 function copySpriteCSS() {
@@ -106,11 +109,11 @@ function scriptRefresh() {
 
 exports.modernizr = function() {
   return src(["./app/assets/styles/**/*.css", "./app/assets/scripts/**/*.js"])
-    .pipe(modernizr({
-      options: [
-        "setClasses"
-      ]
-    }))
+    .pipe(
+      modernizr({
+        options: ["setClasses"]
+      })
+    )
     .pipe(dest("./app/temp/scripts/"));
 };
 
@@ -119,29 +122,65 @@ function deleteDocsFolder() {
 }
 
 function optimizeImages() {
-  return src(["./app/assets/images/**/*", "!./app/assets/images/icons", "!./app/assets/images/icons/**/*"])
-    .pipe(imagemin({
-      progressive: true,
-      interlaced: true,
-      multipass: true
-    }))
+  return src([
+    "./app/assets/images/**/*",
+    "!./app/assets/images/icons",
+    "!./app/assets/images/icons/**/*"
+  ])
+    .pipe(
+      imagemin({
+        progressive: true,
+        interlaced: true,
+        multipass: true
+      })
+    )
     .pipe(dest("./docs/assets/images"));
 }
 
 function compressStatics() {
   return src("./app/index.html")
-    .pipe(usemin({
-      css: [function() {return rev()}, function() {return cssnano()}],
-      js: [function() {return rev()}, function() {return uglify()}]
-    }))
+    .pipe(
+      usemin({
+        css: [
+          function() {
+            return rev();
+          },
+          function() {
+            return cssnano();
+          }
+        ],
+        js: [
+          function() {
+            return rev();
+          },
+          function() {
+            return uglify();
+          }
+        ]
+      })
+    )
     .pipe(dest("./docs"));
 }
 
-exports.icon = series(beginClean, createSprite, createPngCopy, copySpriteGraphic, copySpriteCSS, endClean);
-exports.compile = series(exports.icon, styles, cssInject, exports.modernizr, compileScript, scriptRefresh);
+exports.icon = series(
+  beginClean,
+  createSprite,
+  createPngCopy,
+  copySpriteGraphic,
+  copySpriteCSS,
+  endClean
+);
+exports.compile = series(
+  exports.icon,
+  styles,
+  cssInject,
+  exports.modernizr,
+  compileScript,
+  scriptRefresh
+);
 exports.build = series(deleteDocsFolder, optimizeImages, compressStatics);
 exports.previewDocs = function() {
-  browserSync.init({ notify: false, open: false, server: { baseDir: "docs" } }); 
+  browserSync.init({ notify: false, open: false, server: { baseDir: "docs" } });
 };
 
 exports.watch = function() {
@@ -149,6 +188,8 @@ exports.watch = function() {
   watch(["./app/assets/images/icons/*"], exports.icon);
   watch(["./app/index.html"], html);
   watch(["./app/assets/styles/**/*.css"], series(styles, cssInject));
-  watch(["./app/assets/scripts/**/*.js"], series(exports.modernizr, compileScript, scriptRefresh));
+  watch(
+    ["./app/assets/scripts/**/*.js"],
+    series(exports.modernizr, compileScript, scriptRefresh)
+  );
 };
-
