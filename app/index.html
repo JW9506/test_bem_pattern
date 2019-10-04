@@ -19,6 +19,7 @@
     />
 
     <link rel="stylesheet" href="temp/styles/styles.css" />
+    <script src="temp/scripts/Vendor.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -53,33 +54,33 @@
     <div class="large-hero">
       <picture>
         <source
-          srcset="
+          data-srcset="
             assets/images/hero--large.jpg        1920w,
             assets/images/hero--large-hi-dpi.jpg 3840w
           "
           media="(min-width: 1380px)"
         />
         <source
-          srcset="
+          data-srcset="
             assets/images/hero--medium.jpg        1380w,
             assets/images/hero--medium-hi-dpi.jpg 2760w
           "
           media="(min-width: 990px)"
         />
         <source
-          srcset="
+          data-srcset="
             assets/images/hero--small.jpg         990w,
             assets/images/hero--small-hi-dpi.jpg 1980w
           "
           media="(min-width: 640px)"
         />
-        <img
-          srcset="
+        <img 
+          data-srcset="
             assets/images/hero--smaller.jpg         640w,
             assets/images/hero--smaller-hi-dpi.jpg 1280w
           "
           alt="Coastal view of ocean and moutains"
-          class="large-hero__image"
+          class="large-hero__image lazyload"
         />
       </picture>
       <div class="large-hero__text-content">
@@ -113,8 +114,9 @@
         </h3>
         <div class="wrapper wrapper--medium wrapper--b-margin">
           <img
+            class="lazyload"
             size="(min-width: 970px) 976px, 100vw"
-            srcset="
+            data-srcset="
               assets/images/first-trip.jpg         976w,
               assets/images/first-trip-hi-dpi.jpg 1952w
             "
@@ -128,7 +130,7 @@
             <picture>
               <source
                 size="404px"
-                srcset="
+                data-srcset="
                   assets/images/our-start.jpg        404w,
                   assets/images/our-start-hi-dpi.jpg 808w
                 "
@@ -136,15 +138,16 @@
               />
               <source
                 size="320px"
-                srcset="
+                data-srcset="
                   assets/images/our-start-portrait.jpg        382w,
                   assets/images/our-start-portrait-hi-dpi.jpg 764w
                 "
                 media="(min-width: 800px)"
               />
               <img
+                class="lazyload"
                 size="750px"
-                srcset="
+                data-srcset="
                   assets/images/our-start-landscape.jpg         800w,
                   assets/images/our-start-landscape-hi-dpi.jpg 1600w
                 "
@@ -250,7 +253,7 @@
 
     <div
       id="testimonials"
-      class="page-section page-section--no-b-padding-until-large page-section--testimonials"
+      class="page-section page-section--no-b-padding-until-large page-section--testimonials lazyload"
       data-matching-link="#testimonials-link"
     >
       <div class="wrapper wrapper--no-padding-until-large">
@@ -266,8 +269,9 @@
             <div class="testimonial">
               <div class="testimonial__photo">
                 <img
+                  class="lazyload"
                   sizes="160px"
-                  srcset="
+                  data-srcset="
                     assets/images/testimonial-jane.jpg        160w,
                     assets/images/testimonial-jane-hi-dpi.jpg 320w
                   "
@@ -290,8 +294,9 @@
             <div class="testimonial">
               <div class="testimonial__photo">
                 <img
+                  class="lazyload"
                   sizes="160px"
-                  srcset="
+                  data-srcset="
                     assets/images/testimonial-john.jpg        160w,
                     assets/images/testimonial-john-hi-dpi.jpg 320w
                   "
@@ -313,8 +318,9 @@
             <div class="testimonial testimonial--last">
               <div class="testimonial__photo">
                 <img
+                  class="lazyload"
                   sizes="160px"
-                  srcset="
+                  data-srcset="
                     assets/images/testimonial-cat.jpg        160w,
                     assets/images/testimonial-cat-hi-dpi.jpg 320w
                   "
